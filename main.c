@@ -36,7 +36,7 @@ int main()
 		//vita2d_draw_line(480, 0, 480, 544, RED);
 		//vita2d_draw_line(0, 272, 980, 272, RED);
 
-		vita2d_font_draw_text(vita2d_font, 10, 10, WHITE, 25, "VitaKeyTester by SMOKE");
+		vita2d_font_draw_text(vita2d_font, 10, 10, WHITE, 25, "VitaButtonTester by SMOKE");
 		vita2d_font_draw_text(vita2d_font, 645, 10, WHITE, 25, "Press Start + Select to exit");
 		vita2d_font_draw_text(vita2d_font, 315, 500, WHITE, 25, "Thanks to xerpi for vita2dlib");
 
