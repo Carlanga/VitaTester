@@ -8,7 +8,7 @@
 #include <vita2d.h>
 #include "font.h"
 
-PSP2_MODULE_INFO(0, 0, "VitaKeyTester");
+PSP2_MODULE_INFO(0, 0, "VitaButtonTester");
 
 #define EXIT_COMBO (PSP2_CTRL_START | PSP2_CTRL_SELECT)
 

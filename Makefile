@@ -1,4 +1,4 @@
-TARGET = VitaKeyTester
+TARGET = VitaButtonTester
 OBJS   = main.o
 
 LIBS = -lUVLoader_stub -lvita2d -lSceDisplay_stub -lSceGxm_stub -lSceCommonDialog_stub \
