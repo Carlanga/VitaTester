@@ -3,12 +3,8 @@
 #include <string.h>
 
 #include <psp2/ctrl.h>
-#include <psp2/display.h>
-#include <psp2/gxm.h>
 #include <psp2/kernel/processmgr.h>
 #include <psp2/moduleinfo.h>
-#include <psp2/touch.h>
-#include <psp2/types.h>
 #include <vita2d.h>
 #include "font.h"
 
@@ -16,8 +12,9 @@ PSP2_MODULE_INFO(0, 0, "VitaKeyTester");
 
 #define EXIT_COMBO (PSP2_CTRL_START | PSP2_CTRL_SELECT)
 
-#define WHITE	 RGBA8(255, 255, 255, 255)
-#define GREEN	 RGBA8( 34, 177,  76, 255)
+#define WHITE	RGBA8(255, 255, 255, 255)
+#define GREEN	RGBA8(  0, 255,   0, 255)
+#define RED		RGBA8(255,   0,   0, 255)
 
 int main()
 {
@@ -30,52 +27,54 @@ int main()
 
 	while (1) {
 		sceCtrlPeekBufferPositive(0, &pad, 1);
-		if (pad.buttons & EXIT_COMBO) {
-			break;
-		}
+		if ((pad.buttons & EXIT_COMBO) == EXIT_COMBO) break;
 
 		vita2d_start_drawing();
 		vita2d_clear_screen();
 
+		/* Used for centering button presses on the screen */
+		//vita2d_draw_line(480, 0, 480, 544, RED);
+		//vita2d_draw_line(0, 272, 980, 272, RED);
+
 		vita2d_font_draw_text(vita2d_font, 10, 10, WHITE, 25, "VitaKeyTester by SMOKE");
-		vita2d_font_draw_text(vita2d_font, 642, 10, WHITE, 25, "Press Start + Select to exit");
-		vita2d_font_draw_text(vita2d_font, 340, 500, WHITE, 25, "Thanks to xerpi for vita2dlib");
+		vita2d_font_draw_text(vita2d_font, 645, 10, WHITE, 25, "Press Start + Select to exit");
+		vita2d_font_draw_text(vita2d_font, 315, 500, WHITE, 25, "Thanks to xerpi for vita2dlib");
 
 		if (pad.buttons & PSP2_CTRL_UP) {
-			vita2d_font_draw_text(vita2d_font, 460, 272, GREEN, 50, "UP");
+			vita2d_font_draw_text(vita2d_font, 443, 240, GREEN, 50, "UP");
 		}
 		else if (pad.buttons & PSP2_CTRL_DOWN) {
-			vita2d_font_draw_text(vita2d_font, 423, 272, GREEN, 50, "DOWN");
+			vita2d_font_draw_text(vita2d_font, 407, 240, GREEN, 50, "DOWN");
 		}
 		else if (pad.buttons & PSP2_CTRL_LEFT) {
-			vita2d_font_draw_text(vita2d_font, 425, 272, GREEN, 50, "LEFT");
+			vita2d_font_draw_text(vita2d_font, 425, 240, GREEN, 50, "LEFT");
 		}
 		else if (pad.buttons & PSP2_CTRL_RIGHT) {
-			vita2d_font_draw_text(vita2d_font, 425, 272, GREEN, 50, "RIGHT");
+			vita2d_font_draw_text(vita2d_font, 415, 240, GREEN, 50, "RIGHT");
 		}
 		else if (pad.buttons & PSP2_CTRL_CROSS) {
-			vita2d_font_draw_text(vita2d_font, 425, 272, GREEN, 50, "CROSS");
+			vita2d_font_draw_text(vita2d_font, 400, 240, GREEN, 50, "CROSS");
 		}
 		else if (pad.buttons & PSP2_CTRL_CIRCLE) {
-			vita2d_font_draw_text(vita2d_font, 423, 272, GREEN, 50, "CIRCLE");
+			vita2d_font_draw_text(vita2d_font, 400, 240, GREEN, 50, "CIRCLE");
 		}
 		else if (pad.buttons & PSP2_CTRL_SQUARE) {
-			vita2d_font_draw_text(vita2d_font, 418, 272, GREEN, 50, "SQUARE");
+			vita2d_font_draw_text(vita2d_font, 395, 240, GREEN, 50, "SQUARE");
 		}
 		else if (pad.buttons & PSP2_CTRL_TRIANGLE) {
-			vita2d_font_draw_text(vita2d_font, 410, 272, GREEN, 50, "TRIANGLE");
+			vita2d_font_draw_text(vita2d_font, 373, 240, GREEN, 50, "TRIANGLE");
 		}
 		else if (pad.buttons & PSP2_CTRL_SELECT) {
-			vita2d_font_draw_text(vita2d_font, 423, 272, GREEN, 50, "SELECT");
+			vita2d_font_draw_text(vita2d_font, 397, 240, GREEN, 50, "SELECT");
 		}
 		else if (pad.buttons & PSP2_CTRL_START) {
-			vita2d_font_draw_text(vita2d_font, 425, 272, GREEN, 50, "START");
+			vita2d_font_draw_text(vita2d_font, 410, 240, GREEN, 50, "START");
 		}
 		else if (pad.buttons & PSP2_CTRL_LTRIGGER) {
-			vita2d_font_draw_text(vita2d_font, 410, 272, GREEN, 50, "LTRIGGER");
+			vita2d_font_draw_text(vita2d_font, 375, 240, GREEN, 50, "L-TRIGGER");
 		}
 		else if (pad.buttons & PSP2_CTRL_RTRIGGER) {
-			vita2d_font_draw_text(vita2d_font, 410, 272, GREEN, 50, "RTRIGGER");
+			vita2d_font_draw_text(vita2d_font, 375, 240, GREEN, 50, "R-TRIGGER");
 		}
 
 		vita2d_end_drawing();

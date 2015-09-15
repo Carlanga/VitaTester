@@ -2,7 +2,7 @@ TARGET = VitaKeyTester
 OBJS   = main.o
 
 LIBS = -lUVLoader_stub -lvita2d -lSceDisplay_stub -lSceGxm_stub -lSceCommonDialog_stub \
-	-lSceCtrl_stub -lfreetype -lpng -lz -lc -lm
+	-lSceCtrl_stub -lfreetype -lpng -lz -lm
 
 PREFIX  = arm-vita-eabi
 CC      = $(PREFIX)-gcc
