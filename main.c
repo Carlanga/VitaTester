@@ -81,6 +81,23 @@ int main()
 			vita2d_draw_fill_circle(160, 460, 30, GREEN);
 		}
 
+		/* Right analog stick up */
+		if (pad.ry < 128 - ANALOG_THRESHOLD) {
+			vita2d_draw_fill_circle(860, 380, 30, GREEN);
+		}
+		/* Right analog stick down */
+		if (pad.ry > 128 + ANALOG_THRESHOLD) {
+			vita2d_draw_fill_circle(860, 520, 30, GREEN);
+		}
+		/* Right analog stick left */
+		if (pad.rx < 128 - ANALOG_THRESHOLD) {
+			vita2d_draw_fill_circle(790, 450, 30, GREEN);
+		}
+		/* Right analog stick right */
+		if (pad.rx > 128 + ANALOG_THRESHOLD) {
+			vita2d_draw_fill_circle(930, 450, 30, GREEN);
+		}
+
 		if (pad.buttons & PSP2_CTRL_UP) {
 			vita2d_font_draw_text(vita2d_font, 443, 240, GREEN, 50, "UP");
 		}
