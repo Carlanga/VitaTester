@@ -10,18 +10,28 @@
 
 PSP2_MODULE_INFO(0, 0, "VitaButtonTester");
 
+#define SCREEN_W 960
+#define SCREEN_H 544
+
 #define EXIT_COMBO (PSP2_CTRL_START | PSP2_CTRL_SELECT)
 
-#define WHITE	RGBA8(255, 255, 255, 255)
-#define GREEN	RGBA8(  0, 255,   0, 255)
-#define RED		RGBA8(255,   0,   0, 255)
+#define ANALOG_THRESHOLD 100
+
+#define BLACK   RGBA8(  0,   0,   0, 255)
+#define WHITE   RGBA8(255, 255, 255, 255)
+#define GREEN   RGBA8(  0, 255,   0, 255)
+#define RED     RGBA8(255,   0,   0, 255)
+#define BLUE    RGBA8(  0,   0, 255, 255)
 
 int main()
 {
 	vita2d_init();
+	vita2d_set_clear_color(BLACK);
 
 	int vita2d_font;
 	vita2d_font = vita2d_load_font_mem(opensans, opensans_size);
+
+	sceCtrlSetSamplingMode(PSP2_CTRL_MODE_ANALOG_WIDE);
 
 	SceCtrlData pad;
 
@@ -32,13 +42,44 @@ int main()
 		vita2d_start_drawing();
 		vita2d_clear_screen();
 
+		vita2d_font_draw_text(vita2d_font, 10, 10, WHITE, 25, "VitaButtonTester by SMOKE");
+		vita2d_font_draw_text(vita2d_font, 645, 10, WHITE, 25, "Press Start + Select to exit");
+		vita2d_font_draw_text(vita2d_font, 315, 500, WHITE, 25, "Thanks to xerpi for vita2dlib");
+		vita2d_font_draw_text(vita2d_font, 27, 320, WHITE, 30, "Left analog");
+		vita2d_font_draw_text(vita2d_font, 770, 320, WHITE, 30, "Right analog");
+
+		/* Draw circles to be used for analog input */
+		vita2d_draw_fill_circle(100, 450, 80, WHITE);
+		vita2d_draw_fill_circle(100, 450, 75, BLACK);
+		vita2d_draw_fill_circle(860, 450, 80, WHITE);
+		vita2d_draw_fill_circle(860, 450, 75, BLACK);
+
 		/* Used for centering button presses on the screen */
 		//vita2d_draw_line(480, 0, 480, 544, RED);
 		//vita2d_draw_line(0, 272, 980, 272, RED);
 
-		vita2d_font_draw_text(vita2d_font, 10, 10, WHITE, 25, "VitaButtonTester by SMOKE");
-		vita2d_font_draw_text(vita2d_font, 645, 10, WHITE, 25, "Press Start + Select to exit");
-		vita2d_font_draw_text(vita2d_font, 315, 500, WHITE, 25, "Thanks to xerpi for vita2dlib");
+		/* Used for centering analog circles on the screen */
+		//vita2d_draw_line(100, 300, 100, 544, RED);
+		//vita2d_draw_line(0, 450, 220, 450, RED);
+		//vita2d_draw_line(860, 300, 860, 544, RED);
+		//vita2d_draw_line(740, 450, 960, 450, RED);
+
+		/* Left analog stick up */
+		if (pad.ly < 128 - ANALOG_THRESHOLD) {
+			vita2d_draw_fill_circle(100, 380, 30, GREEN);
+		}
+		/* Left analog stick down */
+		if (pad.ly > 128 + ANALOG_THRESHOLD) {
+			vita2d_draw_fill_circle(100, 520, 30, GREEN);
+		}
+		/* Left analog stick left */
+		if (pad.lx < 128 - ANALOG_THRESHOLD) {
+			vita2d_draw_fill_circle(40, 440, 30, GREEN);
+		}
+		/* Left analog stick right */
+		if (pad.lx > 128 + ANALOG_THRESHOLD) {
+			vita2d_draw_fill_circle(160, 460, 30, GREEN);
+		}
 
 		if (pad.buttons & PSP2_CTRL_UP) {
 			vita2d_font_draw_text(vita2d_font, 443, 240, GREEN, 50, "UP");
@@ -81,6 +122,7 @@ int main()
 		vita2d_swap_buffers();
 	}
 
+	//vita2d_free_font(opensans); // Makes graphics freeze or crashes entire vita
 	vita2d_fini();
 
 	sceKernelExitProcess(0);
