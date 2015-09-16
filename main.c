@@ -7,6 +7,7 @@
 #include <psp2/moduleinfo.h>
 #include <vita2d.h>
 #include "font.h"
+#include "revitalize.h"
 
 PSP2_MODULE_INFO(0, 0, "VitaButtonTester");
 
@@ -23,10 +24,31 @@ PSP2_MODULE_INFO(0, 0, "VitaButtonTester");
 #define RED     RGBA8(255,   0,   0, 255)
 #define BLUE    RGBA8(  0,   0, 255, 255)
 
+void show_splash()
+{
+	vita2d_start_drawing();
+	vita2d_clear_screen();
+
+	vita2d_texture *splash = vita2d_create_empty_texture(960, 544);
+
+	splash = vita2d_load_PNG_buffer(revitalize);
+
+	vita2d_draw_texture(splash, 0, 0);
+
+	vita2d_end_drawing();
+	vita2d_swap_buffers();
+
+	sceKernelDelayThread(5 * 1000 * 1000); // Delay 5 seconds
+
+	vita2d_free_texture(splash);
+}
+
 int main()
 {
 	vita2d_init();
 	vita2d_set_clear_color(BLACK);
+
+	show_splash();
 
 	int vita2d_font;
 	vita2d_font = vita2d_load_font_mem(opensans, opensans_size);
