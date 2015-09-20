@@ -50,8 +50,7 @@ int main()
 
 	show_splash();
 
-	int vita2d_font;
-	vita2d_font = vita2d_load_font_mem(opensans, opensans_size);
+	vita2d_font *font = vita2d_load_font_mem(opensans, opensans_size);
 
 	sceCtrlSetSamplingMode(PSP2_CTRL_MODE_ANALOG_WIDE);
 
@@ -64,11 +63,11 @@ int main()
 		vita2d_start_drawing();
 		vita2d_clear_screen();
 
-		vita2d_font_draw_text(vita2d_font, 10, 10, WHITE, 25, "VitaButtonTester by SMOKE");
-		vita2d_font_draw_text(vita2d_font, 645, 10, WHITE, 25, "Press Start + Select to exit");
-		vita2d_font_draw_text(vita2d_font, 315, 500, WHITE, 25, "Thanks to xerpi for vita2dlib");
-		vita2d_font_draw_text(vita2d_font, 27, 320, WHITE, 30, "Left analog");
-		vita2d_font_draw_text(vita2d_font, 770, 320, WHITE, 30, "Right analog");
+		vita2d_font_draw_text(font, 10, 10, WHITE, 25, "VitaButtonTester by SMOKE");
+		vita2d_font_draw_text(font, 645, 10, WHITE, 25, "Press Start + Select to exit");
+		vita2d_font_draw_text(font, 315, 500, WHITE, 25, "Thanks to xerpi for vita2dlib");
+		vita2d_font_draw_text(font, 27, 320, WHITE, 30, "Left analog");
+		vita2d_font_draw_text(font, 770, 320, WHITE, 30, "Right analog");
 
 		/* Draw circles to be used for analog input */
 		vita2d_draw_fill_circle(100, 450, 80, WHITE);
@@ -121,40 +120,40 @@ int main()
 		}
 
 		if (pad.buttons & PSP2_CTRL_UP) {
-			vita2d_font_draw_text(vita2d_font, 443, 240, GREEN, 50, "UP");
+			vita2d_font_draw_text(font, 443, 240, GREEN, 50, "UP");
 		}
 		else if (pad.buttons & PSP2_CTRL_DOWN) {
-			vita2d_font_draw_text(vita2d_font, 407, 240, GREEN, 50, "DOWN");
+			vita2d_font_draw_text(font, 407, 240, GREEN, 50, "DOWN");
 		}
 		else if (pad.buttons & PSP2_CTRL_LEFT) {
-			vita2d_font_draw_text(vita2d_font, 425, 240, GREEN, 50, "LEFT");
+			vita2d_font_draw_text(font, 425, 240, GREEN, 50, "LEFT");
 		}
 		else if (pad.buttons & PSP2_CTRL_RIGHT) {
-			vita2d_font_draw_text(vita2d_font, 415, 240, GREEN, 50, "RIGHT");
+			vita2d_font_draw_text(font, 415, 240, GREEN, 50, "RIGHT");
 		}
 		else if (pad.buttons & PSP2_CTRL_CROSS) {
-			vita2d_font_draw_text(vita2d_font, 400, 240, GREEN, 50, "CROSS");
+			vita2d_font_draw_text(font, 400, 240, GREEN, 50, "CROSS");
 		}
 		else if (pad.buttons & PSP2_CTRL_CIRCLE) {
-			vita2d_font_draw_text(vita2d_font, 400, 240, GREEN, 50, "CIRCLE");
+			vita2d_font_draw_text(font, 400, 240, GREEN, 50, "CIRCLE");
 		}
 		else if (pad.buttons & PSP2_CTRL_SQUARE) {
-			vita2d_font_draw_text(vita2d_font, 395, 240, GREEN, 50, "SQUARE");
+			vita2d_font_draw_text(font, 395, 240, GREEN, 50, "SQUARE");
 		}
 		else if (pad.buttons & PSP2_CTRL_TRIANGLE) {
-			vita2d_font_draw_text(vita2d_font, 373, 240, GREEN, 50, "TRIANGLE");
+			vita2d_font_draw_text(font, 373, 240, GREEN, 50, "TRIANGLE");
 		}
 		else if (pad.buttons & PSP2_CTRL_SELECT) {
-			vita2d_font_draw_text(vita2d_font, 397, 240, GREEN, 50, "SELECT");
+			vita2d_font_draw_text(font, 397, 240, GREEN, 50, "SELECT");
 		}
 		else if (pad.buttons & PSP2_CTRL_START) {
-			vita2d_font_draw_text(vita2d_font, 410, 240, GREEN, 50, "START");
+			vita2d_font_draw_text(font, 410, 240, GREEN, 50, "START");
 		}
 		else if (pad.buttons & PSP2_CTRL_LTRIGGER) {
-			vita2d_font_draw_text(vita2d_font, 375, 240, GREEN, 50, "L-TRIGGER");
+			vita2d_font_draw_text(font, 375, 240, GREEN, 50, "L-TRIGGER");
 		}
 		else if (pad.buttons & PSP2_CTRL_RTRIGGER) {
-			vita2d_font_draw_text(vita2d_font, 375, 240, GREEN, 50, "R-TRIGGER");
+			vita2d_font_draw_text(font, 375, 240, GREEN, 50, "R-TRIGGER");
 		}
 
 		vita2d_end_drawing();
