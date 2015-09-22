@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #include <psp2/ctrl.h>
 #include <psp2/kernel/processmgr.h>
@@ -99,7 +100,7 @@ int main()
 		}
 		/* Left analog stick right */
 		if (pad.lx > 128 + ANALOG_THRESHOLD) {
-			vita2d_draw_fill_circle(160, 460, 30, GREEN);
+			vita2d_draw_fill_circle(160, 440, 30, GREEN);
 		}
 
 		/* Right analog stick up */
