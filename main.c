@@ -51,7 +51,7 @@ int main()
 
 	show_splash();
 
-	vita2d_font *font = vita2d_load_font_mem(opensans, opensans_size);
+	vita2d_font *font = vita2d_load_font_mem(basicfont, basicfont_size);
 
 	sceCtrlSetSamplingMode(PSP2_CTRL_MODE_ANALOG_WIDE);
 
@@ -65,7 +65,7 @@ int main()
 		vita2d_clear_screen();
 
 		vita2d_font_draw_text(font, 10, 10, WHITE, 25, "VitaButtonTester by SMOKE");
-		vita2d_font_draw_text(font, 645, 10, WHITE, 25, "Press Start + Select to exit");
+		vita2d_font_draw_text(font, 650, 10, WHITE, 25, "Press Start + Select to exit");
 		vita2d_font_draw_text(font, 315, 500, WHITE, 25, "Thanks to xerpi for vita2dlib");
 		vita2d_font_draw_text(font, 27, 320, WHITE, 30, "Left analog");
 		vita2d_font_draw_text(font, 770, 320, WHITE, 30, "Right analog");
@@ -96,11 +96,11 @@ int main()
 		}
 		/* Left analog stick left */
 		if (pad.lx < 128 - ANALOG_THRESHOLD) {
-			vita2d_draw_fill_circle(40, 440, 30, GREEN);
+			vita2d_draw_fill_circle(40, 450, 30, GREEN);
 		}
 		/* Left analog stick right */
 		if (pad.lx > 128 + ANALOG_THRESHOLD) {
-			vita2d_draw_fill_circle(160, 440, 30, GREEN);
+			vita2d_draw_fill_circle(160, 450, 30, GREEN);
 		}
 
 		/* Right analog stick up */
@@ -161,7 +161,6 @@ int main()
 		vita2d_swap_buffers();
 	}
 
-	//vita2d_free_font(opensans); // Makes graphics freeze or crashes entire vita
 	vita2d_fini();
 
 	sceKernelExitProcess(0);
