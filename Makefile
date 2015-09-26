@@ -1,5 +1,5 @@
 TARGET = VitaButtonTester
-OBJS   = main.o
+OBJS   = font.o main.o revitalize.o
 
 LIBS = -lUVLoader_stub -lvita2d -lSceDisplay_stub -lSceGxm_stub -lSceCommonDialog_stub \
 	-lSceCtrl_stub -lfreetype -lpng -lz -lm

@@ -7,10 +7,13 @@
 #include <psp2/kernel/processmgr.h>
 #include <psp2/moduleinfo.h>
 #include <vita2d.h>
-#include "font.h"
-#include "revitalize.h"
 
 PSP2_MODULE_INFO(0, 0, "VitaButtonTester");
+
+extern unsigned int basicfont_size;
+extern unsigned char basicfont[];
+extern unsigned int revitalize_size;
+extern unsigned char revitalize[];
 
 #define SCREEN_W 960
 #define SCREEN_H 544
