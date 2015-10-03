@@ -45,9 +45,7 @@ void show_splash()
     vita2d_start_drawing();
     vita2d_clear_screen();
 
-    vita2d_texture *splash = vita2d_create_empty_texture(960, 544);
-
-    splash = vita2d_load_PNG_buffer(revitalize);
+    vita2d_texture *splash = vita2d_load_PNG_buffer(revitalize);
 
     vita2d_draw_texture(splash, 0, 0);
 
@@ -75,39 +73,19 @@ int main()
     SceCtrlData pad;
 
     /* Setup background buffer */
-    vita2d_texture *bgBuf = vita2d_create_empty_texture(960, 436);
-    bgBuf = vita2d_load_PNG_buffer(background);
+    vita2d_texture *bgBuf = vita2d_load_PNG_buffer(background);
 
     /* Setup button buffers */
-    vita2d_texture *cross = vita2d_create_empty_texture(80, 80);
-    cross = vita2d_load_PNG_buffer(ctrl_cross);
-
-    vita2d_texture *circle = vita2d_create_empty_texture(80, 80);
-    circle = vita2d_load_PNG_buffer(ctrl_circle);
-
-    vita2d_texture *square = vita2d_create_empty_texture(80, 80);
-    square = vita2d_load_PNG_buffer(ctrl_square);
-
-    vita2d_texture *triangle = vita2d_create_empty_texture(80, 80);
-    triangle = vita2d_load_PNG_buffer(ctrl_triangle);
-
-    vita2d_texture *select = vita2d_create_empty_texture(70, 55);
-    select = vita2d_load_PNG_buffer(ctrl_select);
-
-    vita2d_texture *start = vita2d_create_empty_texture(70, 55);
-    start = vita2d_load_PNG_buffer(ctrl_start);
-
-    vita2d_texture *ltrigger = vita2d_create_empty_texture(200, 100);
-    ltrigger = vita2d_load_PNG_buffer(ctrl_ltrigger);
-
-    vita2d_texture *rtrigger = vita2d_create_empty_texture(200, 100);
-    rtrigger = vita2d_load_PNG_buffer(ctrl_rtrigger);
-
-    vita2d_texture *analog = vita2d_create_empty_texture(70, 70);
-    analog = vita2d_load_PNG_buffer(ctrl_analog);
-
-    vita2d_texture *dpad = vita2d_create_empty_texture(70, 70);
-    dpad = vita2d_load_PNG_buffer(ctrl_dpad);
+    vita2d_texture *cross = vita2d_load_PNG_buffer(ctrl_cross);
+    vita2d_texture *circle = vita2d_load_PNG_buffer(ctrl_circle);
+    vita2d_texture *square = vita2d_load_PNG_buffer(ctrl_square);
+    vita2d_texture *triangle = vita2d_load_PNG_buffer(ctrl_triangle);
+    vita2d_texture *select = vita2d_load_PNG_buffer(ctrl_select);
+    vita2d_texture *start = vita2d_load_PNG_buffer(ctrl_start);
+    vita2d_texture *ltrigger = vita2d_load_PNG_buffer(ctrl_ltrigger);
+    vita2d_texture *rtrigger = vita2d_load_PNG_buffer(ctrl_rtrigger);
+    vita2d_texture *analog = vita2d_load_PNG_buffer(ctrl_analog);
+    vita2d_texture *dpad = vita2d_load_PNG_buffer(ctrl_dpad);
 
     while (1) {
         sceCtrlPeekBufferPositive(0, &pad, 1);
