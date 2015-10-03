@@ -8,15 +8,27 @@
 #include <psp2/moduleinfo.h>
 #include <vita2d.h>
 
-PSP2_MODULE_INFO(0, 0, "VitaButtonTester");
+PSP2_MODULE_INFO(0, 0, "VitaTester");
 
+/* Font buffer */
 extern unsigned int basicfont_size;
 extern unsigned char basicfont[];
-extern unsigned int revitalize_size;
+
+/* Splash screen buffer */
 extern unsigned char revitalize[];
 
-#define SCREEN_W 960
-#define SCREEN_H 544
+/* Image buffers */
+extern unsigned char background[];
+extern unsigned char ctrl_cross[];
+extern unsigned char ctrl_circle[];
+extern unsigned char ctrl_square[];
+extern unsigned char ctrl_triangle[];
+extern unsigned char ctrl_select[];
+extern unsigned char ctrl_start[];
+extern unsigned char ctrl_ltrigger[];
+extern unsigned char ctrl_rtrigger[];
+extern unsigned char ctrl_analog[];
+extern unsigned char ctrl_dpad[];
 
 #define EXIT_COMBO (PSP2_CTRL_START | PSP2_CTRL_SELECT)
 
@@ -58,7 +70,44 @@ int main()
 
     sceCtrlSetSamplingMode(PSP2_CTRL_MODE_ANALOG_WIDE);
 
+    sceKernelPowerTick(0);
+
     SceCtrlData pad;
+
+    /* Setup background buffer */
+    vita2d_texture *bgBuf = vita2d_create_empty_texture(960, 436);
+    bgBuf = vita2d_load_PNG_buffer(background);
+
+    /* Setup button buffers */
+    vita2d_texture *cross = vita2d_create_empty_texture(80, 80);
+    cross = vita2d_load_PNG_buffer(ctrl_cross);
+
+    vita2d_texture *circle = vita2d_create_empty_texture(80, 80);
+    circle = vita2d_load_PNG_buffer(ctrl_circle);
+
+    vita2d_texture *square = vita2d_create_empty_texture(80, 80);
+    square = vita2d_load_PNG_buffer(ctrl_square);
+
+    vita2d_texture *triangle = vita2d_create_empty_texture(80, 80);
+    triangle = vita2d_load_PNG_buffer(ctrl_triangle);
+
+    vita2d_texture *select = vita2d_create_empty_texture(70, 55);
+    select = vita2d_load_PNG_buffer(ctrl_select);
+
+    vita2d_texture *start = vita2d_create_empty_texture(70, 55);
+    start = vita2d_load_PNG_buffer(ctrl_start);
+
+    vita2d_texture *ltrigger = vita2d_create_empty_texture(200, 100);
+    ltrigger = vita2d_load_PNG_buffer(ctrl_ltrigger);
+
+    vita2d_texture *rtrigger = vita2d_create_empty_texture(200, 100);
+    rtrigger = vita2d_load_PNG_buffer(ctrl_rtrigger);
+
+    vita2d_texture *analog = vita2d_create_empty_texture(70, 70);
+    analog = vita2d_load_PNG_buffer(ctrl_analog);
+
+    vita2d_texture *dpad = vita2d_create_empty_texture(70, 70);
+    dpad = vita2d_load_PNG_buffer(ctrl_dpad);
 
     while (1) {
         sceCtrlPeekBufferPositive(0, &pad, 1);
@@ -67,97 +116,52 @@ int main()
         vita2d_start_drawing();
         vita2d_clear_screen();
 
-        vita2d_font_draw_text(font, 10, 10, WHITE, 25, "VitaButtonTester by SMOKE");
+        /* Display background */
+        vita2d_draw_texture(bgBuf, 0, 54);
+
+        /* Temporary analog placement until analog measurement is done */
+        vita2d_draw_texture(analog, 85, 285);
+        vita2d_draw_texture(analog, 800, 285);
+
+        /* Display infos */
+        vita2d_font_draw_text(font, 10, 10, WHITE, 25, "VitaTester by SMOKE v1.1 PRE RELEASE");
         vita2d_font_draw_text(font, 650, 10, WHITE, 25, "Press Start + Select to exit");
-        vita2d_font_draw_text(font, 315, 500, WHITE, 25, "Thanks to xerpi for vita2dlib");
-        vita2d_font_draw_text(font, 27, 320, WHITE, 30, "Left analog");
-        vita2d_font_draw_text(font, 770, 320, WHITE, 30, "Right analog");
-
-        /* Draw circles to be used for analog input */
-        vita2d_draw_fill_circle(100, 450, 80, WHITE);
-        vita2d_draw_fill_circle(100, 450, 75, BLACK);
-        vita2d_draw_fill_circle(860, 450, 80, WHITE);
-        vita2d_draw_fill_circle(860, 450, 75, BLACK);
-
-        /* Used for centering button presses on the screen */
-        //vita2d_draw_line(480, 0, 480, 544, RED);
-        //vita2d_draw_line(0, 272, 980, 272, RED);
-
-        /* Used for centering analog circles on the screen */
-        //vita2d_draw_line(100, 300, 100, 544, RED);
-        //vita2d_draw_line(0, 450, 220, 450, RED);
-        //vita2d_draw_line(860, 300, 860, 544, RED);
-        //vita2d_draw_line(740, 450, 960, 450, RED);
-
-        /* Left analog stick up */
-        if (pad.ly < 128 - ANALOG_THRESHOLD) {
-            vita2d_draw_fill_circle(100, 380, 30, GREEN);
-        }
-        /* Left analog stick down */
-        if (pad.ly > 128 + ANALOG_THRESHOLD) {
-            vita2d_draw_fill_circle(100, 520, 30, GREEN);
-        }
-        /* Left analog stick left */
-        if (pad.lx < 128 - ANALOG_THRESHOLD) {
-            vita2d_draw_fill_circle(40, 450, 30, GREEN);
-        }
-        /* Left analog stick right */
-        if (pad.lx > 128 + ANALOG_THRESHOLD) {
-            vita2d_draw_fill_circle(160, 450, 30, GREEN);
-        }
-
-        /* Right analog stick up */
-        if (pad.ry < 128 - ANALOG_THRESHOLD) {
-            vita2d_draw_fill_circle(860, 380, 30, GREEN);
-        }
-        /* Right analog stick down */
-        if (pad.ry > 128 + ANALOG_THRESHOLD) {
-            vita2d_draw_fill_circle(860, 520, 30, GREEN);
-        }
-        /* Right analog stick left */
-        if (pad.rx < 128 - ANALOG_THRESHOLD) {
-            vita2d_draw_fill_circle(790, 450, 30, GREEN);
-        }
-        /* Right analog stick right */
-        if (pad.rx > 128 + ANALOG_THRESHOLD) {
-            vita2d_draw_fill_circle(930, 450, 30, GREEN);
-        }
 
         if (pad.buttons & PSP2_CTRL_UP) {
-            vita2d_font_draw_text(font, 443, 240, GREEN, 50, "UP");
+            vita2d_draw_texture(dpad, 60, 133);
         }
-        else if (pad.buttons & PSP2_CTRL_DOWN) {
-            vita2d_font_draw_text(font, 407, 240, GREEN, 50, "DOWN");
+        if (pad.buttons & PSP2_CTRL_DOWN) {
+            vita2d_draw_texture_rotate(dpad, 94, 231, 3.14f);
         }
-        else if (pad.buttons & PSP2_CTRL_LEFT) {
-            vita2d_font_draw_text(font, 425, 240, GREEN, 50, "LEFT");
+        if (pad.buttons & PSP2_CTRL_LEFT) {
+            vita2d_draw_texture_rotate(dpad, 65, 203, -1.57f);
         }
-        else if (pad.buttons & PSP2_CTRL_RIGHT) {
-            vita2d_font_draw_text(font, 415, 240, GREEN, 50, "RIGHT");
+        if (pad.buttons & PSP2_CTRL_RIGHT) {
+            vita2d_draw_texture_rotate(dpad, 123, 203, 1.57f);
         }
-        else if (pad.buttons & PSP2_CTRL_CROSS) {
-            vita2d_font_draw_text(font, 400, 240, GREEN, 50, "CROSS");
+        if (pad.buttons & PSP2_CTRL_CROSS) {
+            vita2d_draw_texture(cross, 830, 202);
         }
-        else if (pad.buttons & PSP2_CTRL_CIRCLE) {
-            vita2d_font_draw_text(font, 400, 240, GREEN, 50, "CIRCLE");
+        if (pad.buttons & PSP2_CTRL_CIRCLE) {
+            vita2d_draw_texture(circle, 870, 165);
         }
-        else if (pad.buttons & PSP2_CTRL_SQUARE) {
-            vita2d_font_draw_text(font, 395, 240, GREEN, 50, "SQUARE");
+        if (pad.buttons & PSP2_CTRL_SQUARE) {
+            vita2d_draw_texture(square, 790, 165);
         }
-        else if (pad.buttons & PSP2_CTRL_TRIANGLE) {
-            vita2d_font_draw_text(font, 373, 240, GREEN, 50, "TRIANGLE");
+        if (pad.buttons & PSP2_CTRL_TRIANGLE) {
+            vita2d_draw_texture(triangle, 830, 127);
         }
-        else if (pad.buttons & PSP2_CTRL_SELECT) {
-            vita2d_font_draw_text(font, 397, 240, GREEN, 50, "SELECT");
+        if (pad.buttons & PSP2_CTRL_SELECT) {
+            vita2d_draw_texture(select, 781, 375);
         }
-        else if (pad.buttons & PSP2_CTRL_START) {
-            vita2d_font_draw_text(font, 410, 240, GREEN, 50, "START");
+        if (pad.buttons & PSP2_CTRL_START) {
+            vita2d_draw_texture(start, 841, 373);
         }
-        else if (pad.buttons & PSP2_CTRL_LTRIGGER) {
-            vita2d_font_draw_text(font, 375, 240, GREEN, 50, "L-TRIGGER");
+        if (pad.buttons & PSP2_CTRL_LTRIGGER) {
+            vita2d_draw_texture(ltrigger, 40, 40);
         }
-        else if (pad.buttons & PSP2_CTRL_RTRIGGER) {
-            vita2d_font_draw_text(font, 375, 240, GREEN, 50, "R-TRIGGER");
+        if (pad.buttons & PSP2_CTRL_RTRIGGER) {
+            vita2d_draw_texture(rtrigger, 720, 40);
         }
 
         vita2d_end_drawing();
