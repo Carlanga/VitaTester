@@ -5,10 +5,7 @@
 
 #include <psp2/ctrl.h>
 #include <psp2/kernel/processmgr.h>
-#include <psp2/moduleinfo.h>
 #include <vita2d.h>
-
-PSP2_MODULE_INFO(0, 0, "VitaTester");
 
 /* Font buffer */
 extern unsigned int basicfont_size;
