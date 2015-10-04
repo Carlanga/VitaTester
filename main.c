@@ -32,8 +32,6 @@ extern unsigned char ctrl_dpad[];
 
 #define EXIT_COMBO (PSP2_CTRL_START | PSP2_CTRL_SELECT)
 
-#define ANALOG_THRESHOLD 100
-
 #define BLACK   RGBA8(  0,   0,   0, 255)
 #define WHITE   RGBA8(255, 255, 255, 255)
 #define GREEN   RGBA8(  0, 255,   0, 255)
@@ -68,12 +66,10 @@ int main()
 
     sceCtrlSetSamplingMode(PSP2_CTRL_MODE_ANALOG_WIDE);
 
-    sceKernelPowerTick(0);
-
     SceCtrlData pad;
 
     /* Setup background buffer */
-    vita2d_texture *bgBuf = vita2d_load_PNG_buffer(background);
+    vita2d_texture *bg = vita2d_load_PNG_buffer(background);
 
     /* Setup button buffers */
     vita2d_texture *cross = vita2d_load_PNG_buffer(ctrl_cross);
@@ -95,7 +91,7 @@ int main()
         vita2d_clear_screen();
 
         /* Display background */
-        vita2d_draw_texture(bgBuf, 0, 54);
+        vita2d_draw_texture(bg, 0, 54);
 
         /* Temporary analog placement until analog measurement is done */
         vita2d_draw_texture(analog, 85, 285);
@@ -148,6 +144,5 @@ int main()
 
     vita2d_fini();
 
-    sceKernelExitProcess(0);
     return 0;
 }
