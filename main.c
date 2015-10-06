@@ -29,10 +29,10 @@ extern unsigned char ctrl_dpad[];
 
 SceCtrlData pad;
 
-int lx;
-int ly;
-int rx;
-int ry;
+signed char lx;
+signed char ly;
+signed char rx;
+signed char ry;
 int l_Distance;
 int r_Distance;
 float l_angle;
