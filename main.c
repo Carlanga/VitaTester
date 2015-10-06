@@ -76,10 +76,8 @@ int main()
 
     sceCtrlSetSamplingMode(PSP2_CTRL_MODE_ANALOG_WIDE);
 
-    /* Setup background buffer */
+    /* Setup image buffers */
     vita2d_texture *bg = vita2d_load_PNG_buffer(background);
-
-    /* Setup button buffers */
     vita2d_texture *cross = vita2d_load_PNG_buffer(ctrl_cross);
     vita2d_texture *circle = vita2d_load_PNG_buffer(ctrl_circle);
     vita2d_texture *square = vita2d_load_PNG_buffer(ctrl_square);
@@ -93,7 +91,10 @@ int main()
 
     while (1) {
         sceCtrlPeekBufferPositive(0, &pad, 1);
-        if ((pad.buttons & EXIT_COMBO) == EXIT_COMBO) break;
+
+        if (pad.buttons == EXIT_COMBO) {
+            break;
+        }
 
         vita2d_start_drawing();
         vita2d_clear_screen();
@@ -104,6 +105,9 @@ int main()
         /* Display infos */
         vita2d_font_draw_text(font, 10, 10, WHITE, 25, "VitaTester by SMOKE v1.1");
         vita2d_font_draw_text(font, 650, 10, WHITE, 25, "Press Start + Select to exit");
+
+        vita2d_font_draw_textf(font, 10, 500, WHITE, 25, "Left: ( %3d, %3d )", pad.lx, pad.ly);
+        vita2d_font_draw_textf(font, 750, 500, WHITE, 25, "Right: ( %3d, %3d )", pad.rx, pad.ry);
 
         /* Update joystick values */
         lx = (signed char)pad.lx - 128;
