@@ -27,6 +27,19 @@ extern unsigned char ctrl_rtrigger[];
 extern unsigned char ctrl_analog[];
 extern unsigned char ctrl_dpad[];
 
+SceCtrlData pad;
+
+int lx;
+int ly;
+int rx;
+int ry;
+int l_Distance;
+int r_Distance;
+float l_angle;
+float r_angle;
+
+#define PI 3.14159265
+
 #define EXIT_COMBO (PSP2_CTRL_START | PSP2_CTRL_SELECT)
 
 #define BLACK   RGBA8(  0,   0,   0, 255)
@@ -63,8 +76,6 @@ int main()
 
     sceCtrlSetSamplingMode(PSP2_CTRL_MODE_ANALOG_WIDE);
 
-    SceCtrlData pad;
-
     /* Setup background buffer */
     vita2d_texture *bg = vita2d_load_PNG_buffer(background);
 
@@ -90,47 +101,92 @@ int main()
         /* Display background */
         vita2d_draw_texture(bg, 0, 54);
 
-        /* Temporary analog placement until analog measurement is done */
-        vita2d_draw_texture(analog, 85, 285);
-        vita2d_draw_texture(analog, 800, 285);
-
         /* Display infos */
-        vita2d_font_draw_text(font, 10, 10, WHITE, 25, "VitaTester by SMOKE v1.1 PRE RELEASE");
+        vita2d_font_draw_text(font, 10, 10, WHITE, 25, "VitaTester by SMOKE v1.1");
         vita2d_font_draw_text(font, 650, 10, WHITE, 25, "Press Start + Select to exit");
 
+        /* Update joystick values */
+        lx = (signed char)pad.lx - 128;
+        ly = (signed char)pad.ly - 128;
+        rx = (signed char)pad.rx - 128;
+        ry = (signed char)pad.ry - 128;
+
+        l_Distance = sqrt(pow(abs(lx),2) + pow(abs(ly),2));
+        r_Distance = sqrt(pow(abs(rx),2) + pow(abs(ry),2));
+
+        if(abs(lx)>0) {
+            l_angle = (atan(abs(ly)/abs(lx)))*(180/PI);
+        } else {
+            l_angle=90;
+        }
+        if(abs(rx)>0) {
+            r_angle = (atan(abs(ry)/abs(rx)))*(180/PI);
+        } else {
+            r_angle=90;
+        }
+
+        /* Draw and move left analog stick on screen */
+        vita2d_draw_texture(analog, (85 + lx / 10), (285 + ly / 10));
+
+        /* Draw and move right analog on screen */
+        vita2d_draw_texture(analog, (800 + rx / 10), (285 + ry / 10));
+
+        /* Draw the up directional button if pressed */
         if (pad.buttons & PSP2_CTRL_UP) {
             vita2d_draw_texture(dpad, 60, 133);
         }
+
+        /* Draw the down directional button if pressed */
         if (pad.buttons & PSP2_CTRL_DOWN) {
             vita2d_draw_texture_rotate(dpad, 94, 231, 3.14f);
         }
+
+        /* Draw the left directional button if pressed */
         if (pad.buttons & PSP2_CTRL_LEFT) {
             vita2d_draw_texture_rotate(dpad, 65, 203, -1.57f);
         }
+
+        /* Draw the right directional button if pressed */
         if (pad.buttons & PSP2_CTRL_RIGHT) {
             vita2d_draw_texture_rotate(dpad, 123, 203, 1.57f);
         }
+
+        /* Draw cross button if pressed */
         if (pad.buttons & PSP2_CTRL_CROSS) {
             vita2d_draw_texture(cross, 830, 202);
         }
+
+        /* Draw circle button if pressed */
         if (pad.buttons & PSP2_CTRL_CIRCLE) {
             vita2d_draw_texture(circle, 870, 165);
         }
+
+        /* Draw square button if pressed */
         if (pad.buttons & PSP2_CTRL_SQUARE) {
             vita2d_draw_texture(square, 790, 165);
         }
+
+        /* Draw triangle button if pressed */
         if (pad.buttons & PSP2_CTRL_TRIANGLE) {
             vita2d_draw_texture(triangle, 830, 127);
         }
+
+        /* Draw select button if pressed */
         if (pad.buttons & PSP2_CTRL_SELECT) {
             vita2d_draw_texture(select, 781, 375);
         }
+
+        /* Draw start button if pressed */
         if (pad.buttons & PSP2_CTRL_START) {
             vita2d_draw_texture(start, 841, 373);
         }
+
+        /* Draw left trigger if pressed */
         if (pad.buttons & PSP2_CTRL_LTRIGGER) {
             vita2d_draw_texture(ltrigger, 40, 40);
         }
+
+        /* Draw right trigger if pressed */
         if (pad.buttons & PSP2_CTRL_RTRIGGER) {
             vita2d_draw_texture(rtrigger, 720, 40);
         }
