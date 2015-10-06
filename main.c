@@ -5,6 +5,7 @@
 
 #include <psp2/ctrl.h>
 #include <psp2/kernel/processmgr.h>
+#include <psp2/touch.h>
 #include <vita2d.h>
 
 /* Font buffer */
@@ -26,8 +27,11 @@ extern unsigned char ctrl_ltrigger[];
 extern unsigned char ctrl_rtrigger[];
 extern unsigned char ctrl_analog[];
 extern unsigned char ctrl_dpad[];
+extern unsigned char finger_gray[];
+extern unsigned char finger_blue[];
 
-SceCtrlData pad;
+SceCtrlData     pad;
+SceTouchData    touch;
 
 signed char lx;
 signed char ly;
@@ -37,7 +41,12 @@ int l_Distance;
 int r_Distance;
 float l_angle;
 float r_angle;
+int fxTouch;
+int fyTouch;
+int bxTouch;
+int byTouch;
 
+#define lerp(value, from_max, to_max) ((((value*10) * (to_max*10))/(from_max*10))/10)
 #define PI 3.14159265
 
 #define EXIT_COMBO (PSP2_CTRL_START | PSP2_CTRL_SELECT)
@@ -88,6 +97,8 @@ int main()
     vita2d_texture *rtrigger = vita2d_load_PNG_buffer(ctrl_rtrigger);
     vita2d_texture *analog = vita2d_load_PNG_buffer(ctrl_analog);
     vita2d_texture *dpad = vita2d_load_PNG_buffer(ctrl_dpad);
+    vita2d_texture *frontTouch = vita2d_load_PNG_buffer(finger_gray);
+    vita2d_texture *backTouch = vita2d_load_PNG_buffer(finger_blue);
 
     while (1) {
         sceCtrlPeekBufferPositive(0, &pad, 1);
@@ -107,7 +118,7 @@ int main()
         vita2d_font_draw_text(font, 650, 10, WHITE, 25, "Press Start + Select to exit");
 
         vita2d_font_draw_textf(font, 10, 500, WHITE, 25, "Left: ( %3d, %3d )", pad.lx, pad.ly);
-        vita2d_font_draw_textf(font, 750, 500, WHITE, 25, "Right: ( %3d, %3d )", pad.rx, pad.ry);
+        vita2d_font_draw_textf(font, 780, 500, WHITE, 25, "Right: ( %3d, %3d )", pad.rx, pad.ry);
 
         /* Update joystick values */
         lx = (signed char)pad.lx - 128;
@@ -133,7 +144,23 @@ int main()
         vita2d_draw_texture(analog, (85 + lx / 10), (285 + ly / 10));
 
         /* Draw and move right analog on screen */
-        vita2d_draw_texture(analog, (800 + rx / 10), (285 + ry / 10));
+        vita2d_draw_texture(analog, (802 + rx / 10), (285 + ry / 10));
+
+        /* Draw front touch on screen */
+        sceTouchPeek(0, &touch, 1);
+        if (touch.reportNum > 0) {
+            fxTouch = (lerp(touch.report[0].x, 1920, 960) - 50);
+            fyTouch = (lerp(touch.report[0].y, 1088, 544) - 56);
+            vita2d_draw_texture(frontTouch, fxTouch, fyTouch);
+        }
+
+        /* Draw rear touch on screen */
+        sceTouchPeek(1, &touch, 1);
+        if (touch.reportNum > 0) {
+            bxTouch = (lerp(touch.report[0].x, 1920, 890) - 50);
+            byTouch = (lerp(touch.report[0].y, 890, 544) - 56);
+            vita2d_draw_texture(backTouch, bxTouch, byTouch);
+        }
 
         /* Draw the up directional button if pressed */
         if (pad.buttons & PSP2_CTRL_UP) {
