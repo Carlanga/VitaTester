@@ -70,8 +70,6 @@ void show_splash()
     vita2d_swap_buffers();
 
     sceKernelDelayThread(5 * 1000 * 1000); // Delay 5 seconds
-
-    vita2d_free_texture(splash);
 }
 
 int main()
@@ -227,6 +225,21 @@ int main()
     }
 
     vita2d_fini();
+
+    vita2d_free_texture(splash);
+    vita2d_free_texture(bg);
+    vita2d_free_texture(cross);
+    vita2d_free_texture(circle);
+    vita2d_free_texture(square);
+    vita2d_free_texture(triangle);
+    vita2d_free_texture(select);
+    vita2d_free_texture(start);
+    vita2d_free_texture(ltrigger);
+    vita2d_free_texture(rtrigger);
+    vita2d_free_texture(analog);
+    vita2d_free_texture(dpad);
+    vita2d_free_texture(frontTouch);
+    vita2d_free_texture(backTouch);
 
     return 0;
 }
