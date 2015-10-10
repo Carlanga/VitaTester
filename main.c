@@ -70,6 +70,8 @@ void show_splash()
     vita2d_swap_buffers();
 
     sceKernelDelayThread(5 * 1000 * 1000); // Delay 5 seconds
+
+    vita2d_free_texture(splash);
 }
 
 int main()
@@ -144,22 +146,6 @@ int main()
         /* Draw and move right analog on screen */
         vita2d_draw_texture(analog, (802 + rx / 10), (285 + ry / 10));
 
-        /* Draw front touch on screen */
-        sceTouchPeek(0, &touch, 1);
-        if (touch.reportNum > 0) {
-            fxTouch = (lerp(touch.report[0].x, 1920, 960) - 50);
-            fyTouch = (lerp(touch.report[0].y, 1088, 544) - 56);
-            vita2d_draw_texture(frontTouch, fxTouch, fyTouch);
-        }
-
-        /* Draw rear touch on screen */
-        sceTouchPeek(1, &touch, 1);
-        if (touch.reportNum > 0) {
-            bxTouch = (lerp(touch.report[0].x, 1920, 890) - 50);
-            byTouch = (lerp(touch.report[0].y, 890, 544) - 56);
-            vita2d_draw_texture(backTouch, bxTouch, byTouch);
-        }
-
         /* Draw the up directional button if pressed */
         if (pad.buttons & PSP2_CTRL_UP) {
             vita2d_draw_texture(dpad, 60, 133);
@@ -220,13 +206,28 @@ int main()
             vita2d_draw_texture(rtrigger, 720, 40);
         }
 
+        /* Draw front touch on screen */
+        sceTouchPeek(0, &touch, 1);
+        if (touch.reportNum > 0) {
+            fxTouch = (lerp(touch.report[0].x, 1920, 960) - 50);
+            fyTouch = (lerp(touch.report[0].y, 1088, 544) - 56);
+            vita2d_draw_texture(frontTouch, fxTouch, fyTouch);
+        }
+
+        /* Draw rear touch on screen */
+        sceTouchPeek(1, &touch, 1);
+        if (touch.reportNum > 0) {
+            bxTouch = (lerp(touch.report[0].x, 1920, 890) - 50);
+            byTouch = (lerp(touch.report[0].y, 890, 544) - 56);
+            vita2d_draw_texture(backTouch, bxTouch, byTouch);
+        }
+
         vita2d_end_drawing();
         vita2d_swap_buffers();
     }
 
     vita2d_fini();
 
-    vita2d_free_texture(splash);
     vita2d_free_texture(bg);
     vita2d_free_texture(cross);
     vita2d_free_texture(circle);
