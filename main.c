@@ -49,7 +49,7 @@ int byTouch;
 #define lerp(value, from_max, to_max) ((((value*10) * (to_max*10))/(from_max*10))/10)
 #define PI 3.14159265
 
-#define EXIT_COMBO (PSP2_CTRL_START | PSP2_CTRL_SELECT)
+#define EXIT_COMBO (SCE_CTRL_START | SCE_CTRL_SELECT)
 
 #define BLACK   RGBA8(  0,   0,   0, 255)
 #define WHITE   RGBA8(255, 255, 255, 255)
@@ -85,7 +85,7 @@ int main()
 
     printf("Setting everything up\n");
 
-    sceCtrlSetSamplingMode(PSP2_CTRL_MODE_ANALOG_WIDE);
+    sceCtrlSetSamplingMode(SCE_CTRL_MODE_ANALOG_WIDE);
 
     vita2d_font *font = vita2d_load_font_mem(basicfont, basicfont_size);
 
@@ -154,62 +154,62 @@ int main()
         vita2d_draw_texture(analog, (802 + rx / 8), (285 + ry / 8));
 
         /* Draw the up directional button if pressed */
-        if (pad.buttons & PSP2_CTRL_UP) {
+        if (pad.buttons & SCE_CTRL_UP) {
             vita2d_draw_texture(dpad, 60, 133);
         }
 
         /* Draw the down directional button if pressed */
-        if (pad.buttons & PSP2_CTRL_DOWN) {
+        if (pad.buttons & SCE_CTRL_DOWN) {
             vita2d_draw_texture_rotate(dpad, 94, 231, 3.14f);
         }
 
         /* Draw the left directional button if pressed */
-        if (pad.buttons & PSP2_CTRL_LEFT) {
+        if (pad.buttons & SCE_CTRL_LEFT) {
             vita2d_draw_texture_rotate(dpad, 65, 203, -1.57f);
         }
 
         /* Draw the right directional button if pressed */
-        if (pad.buttons & PSP2_CTRL_RIGHT) {
+        if (pad.buttons & SCE_CTRL_RIGHT) {
             vita2d_draw_texture_rotate(dpad, 123, 203, 1.57f);
         }
 
         /* Draw cross button if pressed */
-        if (pad.buttons & PSP2_CTRL_CROSS) {
+        if (pad.buttons & SCE_CTRL_CROSS) {
             vita2d_draw_texture(cross, 830, 202);
         }
 
         /* Draw circle button if pressed */
-        if (pad.buttons & PSP2_CTRL_CIRCLE) {
+        if (pad.buttons & SCE_CTRL_CIRCLE) {
             vita2d_draw_texture(circle, 870, 165);
         }
 
         /* Draw square button if pressed */
-        if (pad.buttons & PSP2_CTRL_SQUARE) {
+        if (pad.buttons & SCE_CTRL_SQUARE) {
             vita2d_draw_texture(square, 790, 165);
         }
 
         /* Draw triangle button if pressed */
-        if (pad.buttons & PSP2_CTRL_TRIANGLE) {
+        if (pad.buttons & SCE_CTRL_TRIANGLE) {
             vita2d_draw_texture(triangle, 830, 127);
         }
 
         /* Draw select button if pressed */
-        if (pad.buttons & PSP2_CTRL_SELECT) {
+        if (pad.buttons & SCE_CTRL_SELECT) {
             vita2d_draw_texture(select, 781, 375);
         }
 
         /* Draw start button if pressed */
-        if (pad.buttons & PSP2_CTRL_START) {
+        if (pad.buttons & SCE_CTRL_START) {
             vita2d_draw_texture(start, 841, 373);
         }
 
         /* Draw left trigger if pressed */
-        if (pad.buttons & PSP2_CTRL_LTRIGGER) {
+        if (pad.buttons & SCE_CTRL_LTRIGGER) {
             vita2d_draw_texture(ltrigger, 40, 40);
         }
 
         /* Draw right trigger if pressed */
-        if (pad.buttons & PSP2_CTRL_RTRIGGER) {
+        if (pad.buttons & SCE_CTRL_RTRIGGER) {
             vita2d_draw_texture(rtrigger, 720, 40);
         }
 
