@@ -121,7 +121,7 @@ int main()
         vita2d_draw_texture(bg, 0, 54);
 
         /* Display infos */
-        vita2d_font_draw_text(font, 10, 10, WHITE, 25, "VitaTester by SMOKE v1.1");
+        vita2d_font_draw_text(font, 10, 10, WHITE, 25, "VitaTester by SMOKE v1.1.1");
         vita2d_font_draw_text(font, 650, 10, WHITE, 25, "Press Start + Select to exit");
 
         vita2d_font_draw_textf(font, 10, 500, WHITE, 25, "Left: ( %3d, %3d )", pad.lx, pad.ly);
