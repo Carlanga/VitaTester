@@ -155,7 +155,7 @@ int main()
 
         /* Draw the up directional button if pressed */
         if (pad.buttons & SCE_CTRL_UP) {
-            vita2d_draw_texture(dpad, 60, 133);
+            vita2d_draw_texture(dpad, 59, 134);
         }
 
         /* Draw the down directional button if pressed */
@@ -180,7 +180,7 @@ int main()
 
         /* Draw circle button if pressed */
         if (pad.buttons & SCE_CTRL_CIRCLE) {
-            vita2d_draw_texture(circle, 870, 165);
+            vita2d_draw_texture(circle, 869, 165);
         }
 
         /* Draw square button if pressed */
@@ -205,7 +205,7 @@ int main()
 
         /* Draw left trigger if pressed */
         if (pad.buttons & SCE_CTRL_LTRIGGER) {
-            vita2d_draw_texture(ltrigger, 40, 40);
+            vita2d_draw_texture(ltrigger, 38, 40);
         }
 
         /* Draw right trigger if pressed */
