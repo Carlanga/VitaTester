@@ -107,6 +107,9 @@ int main()
     printf("Displaying ui\n");
 
     while (1) {
+		sceKernelPowerTick(SCE_KERNEL_POWER_TICK_DISABLE_AUTO_SUSPEND);
+		sceKernelPowerTick(SCE_KERNEL_POWER_TICK_DISABLE_OLED_OFF);
+
         sceCtrlPeekBufferPositive(0, &pad, 1);
 
         if (pad.buttons == EXIT_COMBO) {
