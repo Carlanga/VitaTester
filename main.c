@@ -59,7 +59,6 @@ int byTouch;
 
 void show_splash()
 {
-    printf("Displaying splash screen\n");
     vita2d_start_drawing();
     vita2d_clear_screen();
 
@@ -77,13 +76,10 @@ void show_splash()
 
 int main()
 {
-    printf("Starting VitaTester\n");
     vita2d_init();
     vita2d_set_clear_color(BLACK);
 
     show_splash();
-
-    printf("Setting everything up\n");
 
     sceCtrlSetSamplingMode(SCE_CTRL_MODE_ANALOG_WIDE);
 
@@ -104,18 +100,12 @@ int main()
     vita2d_texture *frontTouch = vita2d_load_PNG_buffer(finger_gray);
     vita2d_texture *backTouch = vita2d_load_PNG_buffer(finger_blue);
 
-    printf("Displaying ui\n");
-
     while (1) {
-		sceKernelPowerTick(SCE_KERNEL_POWER_TICK_DISABLE_AUTO_SUSPEND);
-		sceKernelPowerTick(SCE_KERNEL_POWER_TICK_DISABLE_OLED_OFF);
+		sceKernelPowerTick(0);
 
         sceCtrlPeekBufferPositive(0, &pad, 1);
 
-        if (pad.buttons == EXIT_COMBO) {
-            printf("Exit combo pressed\n");
-            break;
-        }
+        if (pad.buttons == EXIT_COMBO) { break; }
 
         vita2d_start_drawing();
         vita2d_clear_screen();
@@ -239,7 +229,6 @@ int main()
     vita2d_fini();
 
     /* Cleanup */
-    printf("Cleaning up\n");
     vita2d_free_font(font);
     vita2d_free_texture(bg);
     vita2d_free_texture(cross);
@@ -254,7 +243,6 @@ int main()
     vita2d_free_texture(dpad);
     vita2d_free_texture(frontTouch);
     vita2d_free_texture(backTouch);
-    printf("Exiting VitaTester\n");
 
     return 0;
 }
