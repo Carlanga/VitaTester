@@ -1,7 +1,7 @@
 VitaTester
 ==================
 
-A simple homebrew for testing the keys on the Vita
+A simple homebrew for testing the input data on the PSVita
 
 ## Extra Credits
 
