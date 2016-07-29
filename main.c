@@ -60,6 +60,8 @@ int main()
     vita2d_set_clear_color(BLACK);
 
     sceCtrlSetSamplingMode(SCE_CTRL_MODE_ANALOG_WIDE);
+    sceTouchSetSamplingState(SCE_TOUCH_PORT_FRONT, 1);
+    sceTouchSetSamplingState(SCE_TOUCH_PORT_BACK, 1);
 
     vita2d_font *font = vita2d_load_font_mem(basicfont, basicfont_size);
 
@@ -79,7 +81,7 @@ int main()
     vita2d_texture *backTouch = vita2d_load_PNG_buffer(finger_blue);
 
     while (1) {
-		sceKernelPowerTick(0);
+	sceKernelPowerTick(0);
 
         sceCtrlPeekBufferPositive(0, &pad, 1);
 
