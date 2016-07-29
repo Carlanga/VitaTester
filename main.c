@@ -12,9 +12,6 @@
 extern unsigned int basicfont_size;
 extern unsigned char basicfont[];
 
-/* Splash screen buffer */
-extern unsigned char revitalize[];
-
 /* Image buffers */
 extern unsigned char background[];
 extern unsigned char ctrl_cross[];
@@ -57,29 +54,10 @@ int byTouch;
 #define RED     RGBA8(255,   0,   0, 255)
 #define BLUE    RGBA8(  0,   0, 255, 255)
 
-void show_splash()
-{
-    vita2d_start_drawing();
-    vita2d_clear_screen();
-
-    vita2d_texture *splash = vita2d_load_PNG_buffer(revitalize);
-
-    vita2d_draw_texture(splash, 0, 0);
-
-    vita2d_end_drawing();
-    vita2d_swap_buffers();
-
-    sceKernelDelayThread(5 * 1000 * 1000); // Delay 5 seconds
-
-    vita2d_free_texture(splash);
-}
-
 int main()
 {
     vita2d_init();
     vita2d_set_clear_color(BLACK);
-
-    show_splash();
 
     sceCtrlSetSamplingMode(SCE_CTRL_MODE_ANALOG_WIDE);
 
@@ -114,7 +92,7 @@ int main()
         vita2d_draw_texture(bg, 0, 54);
 
         /* Display infos */
-        vita2d_font_draw_text(font, 10, 10, WHITE, 25, "VitaTester by SMOKE v1.1.1");
+        vita2d_font_draw_text(font, 10, 10, WHITE, 25, "VitaTester by SMOKE v1.2");
         vita2d_font_draw_text(font, 650, 10, WHITE, 25, "Press Start + Select to exit");
 
         vita2d_font_draw_textf(font, 10, 500, WHITE, 25, "Left: ( %3d, %3d )", pad.lx, pad.ly);
