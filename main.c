@@ -224,5 +224,7 @@ int main()
     vita2d_free_texture(frontTouch);
     vita2d_free_texture(backTouch);
 
+	sceKernelExitProcess(0);
+
     return 0;
 }
